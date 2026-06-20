@@ -1,0 +1,95 @@
+[gd_scene load_steps=3 format=3 uid="uid://voidstackmain"]
+
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/AdManager.gd" id="2_ads"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="GameLayer" type="Node2D" parent="."]
+
+[node name="AdManager" type="Node" parent="."]
+script = ExtResource("2_ads")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Root" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="HBoxContainer" parent="UI/Root"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 72.0
+grow_horizontal = 2
+theme_override_constants/separation = 24
+
+[node name="ScoreLabel" type="Label" parent="UI/Root/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Score: 0"
+horizontal_alignment = 0
+
+[node name="BestScoreLabel" type="Label" parent="UI/Root/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Best: 0"
+horizontal_alignment = 2
+
+[node name="PerfectLabel" type="Label" parent="UI/Root"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -220.0
+offset_right = 180.0
+offset_bottom = -170.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "PERFECT!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameOverPanel" type="PanelContainer" parent="UI/Root"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -120.0
+offset_right = 180.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="UI/Root/GameOverPanel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" type="Label" parent="UI/Root/GameOverPanel/VBox"]
+layout_mode = 2
+text = "Game Over"
+horizontal_alignment = 1
+
+[node name="ContinueButton" type="Button" parent="UI/Root/GameOverPanel/VBox"]
+layout_mode = 2
+text = "Continue"
+
+[node name="RestartButton" type="Button" parent="UI/Root/GameOverPanel/VBox"]
+layout_mode = 2
+text = "Restart"
