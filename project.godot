@@ -13,6 +13,7 @@ config_version=5
 config/name="Void Stack"
 run/main_scene="res://Main.tscn"
 config/features=PackedStringArray("4.6", "Mobile")
+config/icon="res://assets/ic_launcher.png"
 
 [display]
 

@@ -318,7 +318,34 @@ func _input(event: InputEvent) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel") and _handle_back_requested():
+		get_viewport().set_input_as_handled()
+		return
+
 	_try_drop_from_input(event)
+
+
+func _handle_back_requested() -> bool:
+	if settings_panel.visible:
+		_on_settings_back_pressed()
+		return true
+	if theme_menu.visible:
+		_on_back_to_title_pressed()
+		return true
+	if pause_menu.visible:
+		_resume_game()
+		return true
+	if game_over_panel.visible:
+		_go_to_main_menu()
+		return true
+	if playing and not paused:
+		_show_pause_menu()
+		return true
+	if on_title_screen:
+		_save_best_score()
+		get_tree().quit()
+		return true
+	return false
 
 
 func _try_drop_from_input(event: InputEvent) -> void:
