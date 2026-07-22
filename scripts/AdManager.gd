@@ -15,6 +15,7 @@ signal rewarded_continue_failed
 signal rewarded_ad_shown
 signal interstitial_finished
 signal rewarded_ad_state_changed
+signal android_back_pressed
 
 var completed_runs := 0
 var ads_removed := false
@@ -160,6 +161,7 @@ func _setup_real_admob() -> void:
 	_connect_admob_signal("interstitial_ad_load_failed", _on_interstitial_ad_load_failed)
 	_connect_admob_signal("interstitial_ad_closed", _on_interstitial_ad_closed)
 	_connect_admob_signal("interstitial_ad_failed", _on_interstitial_ad_failed)
+	_connect_admob_signal("android_back_pressed", _on_android_back_pressed)
 	real_admob_available = true
 	print("ADMOB FLOW: SDK initialize requested app_id=", ADMOB_APP_ID)
 	_call_admob("initialize", [ADMOB_APP_ID])
@@ -292,3 +294,7 @@ func _on_interstitial_ad_failed() -> void:
 	interstitial_ad_ready = false
 	emit_signal("interstitial_finished")
 	_load_interstitial_ad()
+
+
+func _on_android_back_pressed() -> void:
+	emit_signal("android_back_pressed")

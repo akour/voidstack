@@ -31,9 +31,11 @@ public class VoidStackAdMob extends GodotPlugin {
 	private InterstitialAd interstitialAd;
 	private boolean initialized = false;
 	private boolean rewardedEarned = false;
+	private static VoidStackAdMob activePlugin;
 
 	public VoidStackAdMob(Godot godot) {
 		super(godot);
+		activePlugin = this;
 	}
 
 	@Override
@@ -77,7 +79,23 @@ public class VoidStackAdMob extends GodotPlugin {
 		signals.add(new SignalInfo("interstitial_ad_load_failed"));
 		signals.add(new SignalInfo("interstitial_ad_closed"));
 		signals.add(new SignalInfo("interstitial_ad_failed"));
+		signals.add(new SignalInfo("android_back_pressed"));
 		return signals;
+	}
+
+	public static void emitAndroidBackPressed() {
+		if (activePlugin == null) {
+			Log.w(TAG, "Android back requested before plugin was ready");
+			return;
+		}
+		Log.d(TAG, "Android back requested");
+		activePlugin.runOnRenderThread(() -> activePlugin.emitSignal("android_back_pressed"));
+	}
+
+	@Override
+	public boolean onMainBackPressed() {
+		emitAndroidBackPressed();
+		return true;
 	}
 
 	@UsedByGodot

@@ -279,6 +279,8 @@ func _ready() -> void:
 		ad_manager.rewarded_ad_shown.connect(_on_rewarded_ad_shown)
 	if ad_manager.has_signal("rewarded_ad_state_changed"):
 		ad_manager.rewarded_ad_state_changed.connect(_on_rewarded_ad_state_changed)
+	if ad_manager.has_signal("android_back_pressed"):
+		ad_manager.android_back_pressed.connect(_handle_back_requested)
 	_style_panels()
 	_setup_audio()
 	_setup_floating_particles()
@@ -311,6 +313,11 @@ func _process(delta: float) -> void:
 	_update_floating_particles(delta)
 	_update_map_touch_inertia(delta)
 	_update_map_scroll_focus_feedback()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		_handle_back_requested()
 
 
 func _input(event: InputEvent) -> void:
